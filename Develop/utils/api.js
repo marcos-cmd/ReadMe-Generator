@@ -1,7 +1,21 @@
-const api = {
-  getUser(username) {
+// require axios
+const axios = require('axios');
+const dotenv = require('dotenv');
+dotenv.config();
+// create a const for the apiKey to avoid it being shared
+const apiKey = process.env.apiKey;
+// console.log(apiKey);
 
-  }
+const api = async function getGitHubData() {
+    // need a header based on github API docs
+    const config = {
+            headers: { 'Authorization': 'token ' + apiKey }
+        }
+        // pass in the request url and the api authentication
+    const { data } = await axios.get(`https://api.github.com/users/${username}`, config)
+        // console.log("inside api", data);
+    return data;
 };
 
-module.exports = api;
+// need to deconstruct the variable for the API call
+module.exports = { api };
